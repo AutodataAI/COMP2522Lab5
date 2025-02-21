@@ -19,6 +19,32 @@ import java.util.*;
 
 public class BookStore<T extends Literature> {
 
+    static class BookStoreInfo
+    {
+        public void displayInfo(final String storeName,
+                                final int itemCount)
+        {
+            System.out.println("BookStore: "
+                               + storeName
+                               + ", Items: "
+                               + itemCount);
+        }
+    }
+
+    class NovelStatistics {
+        private static final int INITIAL_LENGTH = 0;
+        public double averageTitleLength()
+        {
+            int totalLength;
+            totalLength = INITIAL_LENGTH;
+            for (final T item : items)
+            {
+                totalLength += item.getTitle().length();
+            }
+            return (double) totalLength / items.size();
+        }
+    }
+
     private final String bookStoreName;
     private final List<Novel> novels;
 
@@ -189,27 +215,24 @@ public class BookStore<T extends Literature> {
      */
     public void printBookTitle(final String title)
     {
-        for (final Novel searchTitle : novels)
-        {
-            if (searchTitle.getTitle().toUpperCase().contains(title.toUpperCase()))
-            {
-                System.out.println(searchTitle.getTitle());
+        items.forEach(item -> {
+            if (item.getTitle().contains(title)) {
+                System.out.println(item.getTitle());
             }
-        }
+        });
     }
+
+
 
     /**
      * prints all book titles In alphabetical order
      */
     public void printTitlesInAlphaOrder()
     {
-        //This should sort the novels by alphabetic order, tests required
-        novels.sort(null);
 
-        for(final Novel titleAlphabetic : novels)
-        {
-            System.out.println(titleAlphabetic.getTitle());
-        }
+
+        items.sort(String::compareToIgnoreCase);
+        items.forEach(item -> System.out.println(item.getTitle()));
     }
 
     /**
@@ -422,4 +445,20 @@ public class BookStore<T extends Literature> {
 
             return builder.toString();
     }
+
+    /**
+     * Uses the PECS principle to accept a collection of novels using
+     * List "? super Novel" and add novels to it.
+     * @param novelCollection
+     */
+    public void addNovelsToCollection(final List<? super Novel> novelCollection)
+    {
+        for (final T item : items) {
+            if (item instanceof Novel) {
+                novelCollection.add((Novel) item);
+            }
+        }
+    }
+
+
 }
