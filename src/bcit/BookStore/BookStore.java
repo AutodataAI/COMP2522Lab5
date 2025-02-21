@@ -230,7 +230,7 @@ public class BookStore<T extends Literature> {
     public void printTitlesInAlphaOrder()
     {
 
-
+        //Java doesn't like this line below
         items.sort(String::compareToIgnoreCase);
         items.forEach(item -> System.out.println(item.getTitle()));
     }
