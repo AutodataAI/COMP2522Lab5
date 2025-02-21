@@ -17,10 +17,12 @@ import java.util.*;
 
 
 
-public class BookStore {
+public class BookStore<T extends Literature> {
 
     private final String bookStoreName;
     private final List<Novel> novels;
+
+    private final List<T> items = new ArrayList<>();
     //Hashmap used for part 2
     private final Map<String, Novel> novelsMap = new HashMap<String, Novel>();
 
@@ -135,7 +137,7 @@ public class BookStore {
         novels.add(new Novel("Wide Sargasso Sea", "Jean Rhys", 1966));
 
         //Adds all novels to the HashMap for part 2
-        for(Novel novel : novels)
+        for(final Novel novel : novels)
         {
             novelsMap.put(novel.getTitle(), novel);
         }
@@ -158,12 +160,24 @@ public class BookStore {
         }
     }
 
+    public void addItem(T item)
+    {
+        items.add(item);
+    }
+
+    public void printItems()
+    {
+        for (T item : items)
+        {
+            System.out.println(item.getTitle());
+        }
+    }
     /**
      * Prints all novel titles to UPPERCASE
      */
     public void printAllTitles()
     {
-        for(Novel title : novels)
+        for(final Novel title : novels)
         {
             System.out.println(title.getTitle().toUpperCase());
         }
@@ -175,7 +189,7 @@ public class BookStore {
      */
     public void printBookTitle(final String title)
     {
-        for (Novel searchTitle : novels)
+        for (final Novel searchTitle : novels)
         {
             if (searchTitle.getTitle().toUpperCase().contains(title.toUpperCase()))
             {
@@ -192,7 +206,7 @@ public class BookStore {
         //This should sort the novels by alphabetic order, tests required
         novels.sort(null);
 
-        for(Novel titleAlphabetic : novels)
+        for(final Novel titleAlphabetic : novels)
         {
             System.out.println(titleAlphabetic.getTitle());
         }
@@ -206,7 +220,7 @@ public class BookStore {
     public void printGroupByDecade(final int decade)
     {
         validateDecade(decade);
-        for(Novel novelDecade : novels)
+        for(final Novel novelDecade : novels)
         {
             /*Checking if the books decade aligns with inputted decade
              by integer dividing both by 10.
@@ -230,7 +244,7 @@ public class BookStore {
     {
         String longest = novels.get(0).getTitle();
 
-        for(Novel checkLongest : novels)
+        for(final Novel checkLongest : novels)
         {
             if (checkLongest.getTitle().length() > longest.length())
             {
@@ -250,7 +264,7 @@ public class BookStore {
     {
         boolean wasWritten = false;
 
-        for(Novel novel : novels)
+        for(final Novel novel : novels)
         {
             if(novel.getYearPublished() == year)
             {
@@ -270,7 +284,7 @@ public class BookStore {
     {
         int  booksContaining = 0;
 
-        for(Novel novel : novels)
+        for(final Novel novel : novels)
         {
             if (novel.getTitle().toUpperCase().contains(word.toUpperCase()))
             {
@@ -290,7 +304,7 @@ public class BookStore {
     {
         int percentWritten = 0;
 
-        for(Novel novel : novels)
+        for(final Novel novel : novels)
         {
             if(novel.getYearPublished() >= first
                && novel.getYearPublished() <= last)
@@ -313,7 +327,7 @@ public class BookStore {
     {
         Novel oldestBook = novels.get(0);
 
-        for(Novel novel : novels)
+        for(final Novel novel : novels)
         {
             if(novel.getYearPublished() < oldestBook.getYearPublished())
             {
@@ -334,7 +348,7 @@ public class BookStore {
     {
         List<Novel> bookLengths = new ArrayList<Novel>();
 
-        for (Novel novel : novels)
+        for (final Novel novel : novels)
         {
             if(novel.getTitle().length() == titleLength)
             {

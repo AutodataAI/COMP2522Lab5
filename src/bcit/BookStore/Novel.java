@@ -9,7 +9,7 @@ package bcit.BookStore;
  * @version 1.0
  */
 
-public class Novel implements Comparable<Novel>
+public class Novel extends Literature implements Comparable<Novel>
 {
 
 
@@ -87,6 +87,7 @@ public class Novel implements Comparable<Novel>
      *
      * @return String title name.
      */
+    @Override
     public String getTitle()
     {
         return title;
