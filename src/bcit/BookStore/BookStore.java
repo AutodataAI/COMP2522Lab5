@@ -167,6 +167,11 @@ public class BookStore<T extends Literature> {
         {
             novelsMap.put(novel.getTitle(), novel);
         }
+
+        for(final Novel novel : novels)
+        {
+            items.add((T) novel);
+        }
     }
 
     /*
@@ -216,7 +221,7 @@ public class BookStore<T extends Literature> {
     public void printBookTitle(final String title)
     {
         items.forEach(item -> {
-            if (item.getTitle().contains(title)) {
+            if (item.getTitle().toLowerCase().contains(title.toLowerCase())) {
                 System.out.println(item.getTitle());
             }
         });
@@ -229,10 +234,24 @@ public class BookStore<T extends Literature> {
      */
     public void printTitlesInAlphaOrder()
     {
+        final List<String> titles;
+        titles = new ArrayList<>();
 
+        items.forEach(item -> {
+            if(item != null)
+            {
+                final String title;
+                title = item.getTitle();
+
+                if(title !=null && !(title.isBlank()))
+                {
+                    titles.add(title);
+                }
+            }
+        });
         //Java doesn't like this line below
-        items.sort(String::compareToIgnoreCase);
-        items.forEach(item -> System.out.println(item.getTitle()));
+        titles.sort(String::compareToIgnoreCase);
+        titles.forEach(System.out::println);
     }
 
     /**
